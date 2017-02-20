@@ -8,9 +8,28 @@
   <!-- Include the stylesheets from your site here -->
   <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^0.1/dist/cms.css" />
   <!-- Include a CMS specific stylesheet here -->
+  
+  <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
 
+  <!-- Make sure to include Nelify's authentiation library -->
+  <script src="https://app.netlify.com/authentication.js"></script>
+
+  <script>
+    $(function() {
+      $("#login").on("click", function(e) {
+        e.preventDefault();
+        netlify.authenticate({provider:"github", scope: "user"}, function(err, data) {
+          if (err) {
+            return $("#output").text("Error Authenticating with GitHub: " + err);
+          }
+          $("#output").text("Authenticated with GitHub. Access Token: " + data.token);
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <script src="https://unpkg.com/netlify-cms@^0.1/dist/cms.js"></script>
+  
 </body>
 </html>
